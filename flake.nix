@@ -102,7 +102,7 @@
 
           deployChecks = deploy: builtins.mapAttrs (_: check: check deploy) {
             deploy-schema = deploy: final.runCommand "jsonschema-deploy-system" { } ''
-              ${final.python3.pkgs.jsonschema}/bin/jsonschema -i ${final.writeText "deploy.json" (builtins.toJSON deploy)} ${./interface.json} && touch $out
+              ${final.check-jsonschema}/bin/check-jsonschema ${final.writeText "deploy.json" (builtins.toJSON deploy)} --schemafile ${./interface.json} && touch $out
             '';
 
             deploy-activate = deploy:
